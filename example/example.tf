@@ -1,9 +1,9 @@
 locals {
   naming_convention_info = {
-    env          = "env"
-    zone         = "zn"
-    tier         = "www"
-    name         = "001"
+    env  = "env"
+    zone = "zn"
+    tier = "www"
+    name = "001"
   }
   tags = {
     environment = "prd"
@@ -25,7 +25,7 @@ module "resource_groups" {
 }
 
 module "azurerm_container_registry" {
-source = "git::https://github.com/BrettOJ/tf-az-module-azure-container-registry?ref=main"
+  source                        = "git::https://github.com/BrettOJ/tf-az-module-azure-container-registry?ref=main"
   resource_group_name           = module.resource_groups.rg_output[1].name
   location                      = var.location
   sku                           = var.sku
@@ -40,24 +40,9 @@ source = "git::https://github.com/BrettOJ/tf-az-module-azure-container-registry?
   data_endpoint_enabled         = var.data_endpoint_enabled
   network_rule_bypass_option    = var.network_rule_bypass_option
   tags                          = local.tags
-  namung_convention_info        = local.naming_convention_info
-
-    georeplications = {
-        location                  = var.georeplications_location
-        regional_endpoint_enabled = var.georeplications_regional_endpoint_enabled
-        zone_redundancy_enabled   = var.georeplications_zone_redundancy_enabled
-        tags                      = var.georeplications_tags
-        }
-  
-
-  network_rule_set = {
-      default_action = var.network_rule_set_default_action
-      ip_rule = {
-        action   = var.network_rule_set_ip_rule_action
-        ip_range = var.network_rule_set_ip_rule_ip_range
-      }
-    }
-  
+  naming_convention_info        = local.naming_convention_info
+  georeplications               = null
+  network_rule_set = null
 
   identity = {
     type         = var.identity_type
@@ -65,19 +50,8 @@ source = "git::https://github.com/BrettOJ/tf-az-module-azure-container-registry?
   }
 
   encryption = {
-    key_vault_key_id   = var.encryption_key_vault_key_id
-    identity_client_id = var.encryption_identity_client_id
+    key_vault_key_id   = null
+    identity_client_id = null
   }
 }
 
-resource "azurerm_user_assigned_identity" "example" {
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
-
-  name = "registry-uai"
-}
-
-data "azurerm_key_vault_key" "example" {
-  name         = "super-secret"
-  key_vault_id = data.azurerm_key_vault.existing.id
-}

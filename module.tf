@@ -41,9 +41,12 @@ resource "azurerm_container_registry" "acr" {
     identity_ids = var.identity.identity_ids
   }
 
-  encryption {
-    key_vault_key_id   = var.encryption.key_vault_key_id
-    identity_client_id = var.encryption.identity_client_id
+  dynamic encryption {
+    for_each = var.encryption != null ? [var.encryption] : []
+    content {
+      key_vault_key_id   = var.encryption.key_vault_key_id
+      identity_client_id = var.encryption.identity_client_id
+    }
   }
 
 }
