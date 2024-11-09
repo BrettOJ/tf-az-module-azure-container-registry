@@ -95,10 +95,10 @@ variable "network_rule_set" {
   description = "A network_rule_set block as defined below."
   type = object({
     default_action = string
-    ip_rule = list(object({
+    ip_rule = object({
       action   = string
       ip_range = string
-    }))
+    })
   })
   default = null
 }

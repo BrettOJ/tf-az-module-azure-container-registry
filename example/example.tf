@@ -49,9 +49,6 @@ module "azurerm_container_registry" {
     identity_ids = var.identity_identity_ids
   }
 
-  encryption = {
-    key_vault_key_id   = null
-    identity_client_id = null
-  }
+  encryption = null
 }
 
