@@ -1,8 +1,8 @@
 locals {
   naming_convention_info = {
     env  = "env"
-    zone = "zn"
-    tier = "www"
+    site = "zn"
+    app = "www"
     name = "001"
   }
   tags = {

@@ -126,8 +126,8 @@ variable "naming_convention_info" {
   type = object({
     name = string
     env  = string
-    zone = string
-    tier = string
+    app = string
+    site = string
   })
 
 }
